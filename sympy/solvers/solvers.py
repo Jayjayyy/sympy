@@ -2760,17 +2760,16 @@ def nsolve(*args, **kwargs):
             used, but when using nsolve (and findroot) the keyword to use is
             "solver".'''))
 
-    if 'prec' in kwargs:
-        prec = kwargs.pop('prec')
-        import mpmath
-        mpmath.mp.dps = prec
-    else:
-        prec = None
-
     # gather relevant keyword arguments
+    prec = kwargs.pop('prec', None)
     modules = kwargs.get('modules', ['mpmath'])
     verbose = kwargs.get('verbose', False)
     as_dict = kwargs.pop('dict', False)
+
+    # set custom precision if specified
+    if 'prec' is not None:
+        import mpmath
+        mpmath.mp.dps = prec
 
     # interpret arguments
     if len(args) == 3:
