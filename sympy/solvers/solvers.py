@@ -2767,7 +2767,9 @@ def nsolve(*args, **kwargs):
     else:
         prec = None
 
-    # keyword argument to return result as a dictionary
+    # gather relevant keyword arguments
+    modules = kwargs.get('modules', ['mpmath'])
+    verbose = kwargs.get('verbose', False)
     as_dict = kwargs.pop('dict', False)
 
     # interpret arguments
@@ -2791,7 +2793,6 @@ def nsolve(*args, **kwargs):
     else:
         raise TypeError('nsolve expected at most 3 arguments, got %i'
                         % len(args))
-    modules = kwargs.get('modules', ['mpmath'])
     if iterable(f):
         f = list(f)
         for i, fi in enumerate(f):
@@ -2823,7 +2824,6 @@ def nsolve(*args, **kwargs):
     if len(fargs) > f.cols:
         raise NotImplementedError(filldedent('''
             need at least as many equations as variables'''))
-    verbose = kwargs.get('verbose', False)
     if verbose:
         print('f(x):')
         print(f)
